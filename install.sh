@@ -19,15 +19,33 @@ echo "### Installing Updates."
 sudo apt upgrade -y
 
 echo "### Installing packages"
-sudo apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless zsh
+sudo apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless terminator zsh
+
+echo "### Adding extra repositories"
+sudo add-apt-repository ppa:system76/pop
 
 echo "###Enable Smartcard"
 sudo systemctl enable --now pcscd
 
-echo "### Installing Antigen"
+echo "¤¤¤Antigen"
 curl -L git.io/antigen > antigen.zsh
+cd ~/
+mkdir .antigen
+cp antigen.zsh .antigen/
+touch .zshrc
 
+
+echo "###Repo time"
+mkdir repos
+cd repos
+git clone https://github.com/secrary/SSMA.git
+git clone https://github.com/VirusTotal/yara.git
 
 
 # Let's clean up apt
 sudo apt-get autoclean -y
+sudo apt-get autoremove -y
+
+#setting zsh
+echo "###Changing to ZSH and then we are done"
+chsh -s $(which zsh)
