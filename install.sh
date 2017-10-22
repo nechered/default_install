@@ -13,13 +13,21 @@ echo "
 
 # Let's pull some updates
 echo "### Pulling Updates."
-apt update -y
+sudo apt update -y
 
 echo "### Installing Updates."
-apt upgrade -y
+sudo apt upgrade -y
 
 echo "### Installing packages"
-apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless zsh
+sudo apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless zsh
 
-echo "### Installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+echo "###Enable Smartcard"
+sudo systemctl enable --now pcscd
+
+echo "### Installing Antigen"
+curl -L git.io/antigen > antigen.zsh
+
+
+
+# Let's clean up apt
+sudo apt-get autoclean -y
