@@ -65,10 +65,10 @@ EOF
 echo "###Repo time"
 mkdir repos
 cd repos
-git clone https://github.com/secrary/SSMA.git
+git clone https://github.com/secrary/SSMA.git &
+git clone https://github.com/VirusTotal/yara.git &
 wait
-git clone https://github.com/VirusTotal/yara.git
-wait
+
 # Let's clean up apt
 sudo apt-get autoclean -y
 sudo apt-get autoremove -y
