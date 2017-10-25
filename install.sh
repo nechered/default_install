@@ -26,7 +26,7 @@ sudo add-apt-repository ppa:system76/pop
 echo "###Enable Smartcard"
 sudo systemctl enable --now pcscd
 
-echo "¤¤¤Antigen"
+echo "##Antigen"
 curl -L git.io/antigen > antigen.zsh
 cd ~/
 mkdir .antigen
@@ -66,8 +66,9 @@ echo "###Repo time"
 mkdir repos
 cd repos
 git clone https://github.com/secrary/SSMA.git
+wait
 git clone https://github.com/VirusTotal/yara.git
-
+wait
 # Let's clean up apt
 sudo apt-get autoclean -y
 sudo apt-get autoremove -y
