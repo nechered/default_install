@@ -18,7 +18,7 @@ echo "### Installing Updates."
 sudo apt upgrade -y
 
 echo "### Installing packages"
-sudo apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless neofecth terminator zsh
+sudo apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless terminator zsh
 
 echo "### Adding extra repositories"
 sudo add-apt-repository ppa:system76/pop
@@ -33,7 +33,7 @@ mkdir .antigen
 cp antigen.zsh .antigen/
 touch .zshrc
 cat >> .zshrc << EOF
-source ~/.antingen/antigen.zsh
+source ~/.antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
