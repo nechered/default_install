@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Default debian / ubuntu install script
-#v0.1 2017-10-22
+#v0.11 2017-10-27
 #
 
 
@@ -27,6 +27,9 @@ sudo apt update -y
 echo "### Installing Updates."
 sudo apt upgrade -y
 
+echo "Adding PPA repos"
+sudo add-apt-repository -y ppa:snwh/pulp
+
 echo "### Installing packages"
 sudo apt install -y curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless terminator zsh
 
@@ -40,18 +43,12 @@ myHOST=$a$n
 hostnamectl set-hostname $myHOST
 sudo sed -i 's#127.0.1.1.*#127.0.1.1\t'"$myHOST"'#g' /etc/hosts
 
-echo "### Adding extra repositories"
-sudo add-apt-repository ppa:system76/pop
-
-echo "###Enable Smartcard"
-sudo systemctl enable --now pcscd
-
 echo "##Antigen"
 curl -L git.io/antigen > antigen.zsh
 cd ~/
-mkdir .antigen
-cp antigen.zsh .antigen/
-touch .zshrc
+mkdir ~/.antigen
+cp antigen.zsh ~/.antigen/
+touch ~/.zshrc
 cat >> .zshrc << EOF
 source ~/.antigen/antigen.zsh
 
@@ -81,6 +78,12 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 fi
 gpg-connect-agent /bye
 EOF
+
+echo "###Fixing GPG over SSH"
+sudo systemctl enable --now pcscd
+sudo killall gpg-agent
+gpg-agent --daemon --enable-ssh-support
+
 
 echo "###Repo time"
 mkdir repos
