@@ -32,7 +32,7 @@ sudo apt install -y curl scdaemon python-pip make gcc automake libtool sleuthkit
 
 # Setting randomhostname
 echo "### Setting up random hostname"
-cp *.txt /usr/share/dict/
+sudo cp *.txt /usr/share/dict/
 
 a=$(RANDOMWORD /usr/share/dict/a.txt)
 n=$(RANDOMWORD /usr/share/dict/n.txt)
