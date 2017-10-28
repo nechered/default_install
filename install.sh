@@ -4,11 +4,21 @@
 #v0.1 2017-10-22
 #
 
+
 echo "
 ##########################################################
 # Default Debian / Ubuntu install Script                 #
 ##########################################################
 "
+
+# Used for hostname
+RANDOMWORD () {
+  local myWORDFILE="$1"
+  local myLINES=$(cat $myWORDFILE  | wc -l)
+  local myRANDOM=$((RANDOM % $myLINES))
+  local myNUM=$((myRANDOM * myRANDOM % $myLINES + 1))
+  echo -n $(sed -n "$myNUM p" $myWORDFILE | tr -d \' | tr A-Z a-z)
+}
 
 # Let's pull some updates
 echo "### Pulling Updates."
@@ -18,7 +28,17 @@ echo "### Installing Updates."
 sudo apt upgrade -y
 
 echo "### Installing packages"
-sudo apt install -y git curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless terminator zsh
+sudo apt install -y curl scdaemon python-pip make gcc automake libtool sleuthkit pcscd hashdeep python3-pip bless terminator zsh
+
+# Setting randomhostname
+echo "### Setting up random hostname"
+cp *.txt /usr/share/dict/
+
+a=$(RANDOMWORD /usr/share/dict/a.txt)
+n=$(RANDOMWORD /usr/share/dict/n.txt)
+myHOST=$a$n
+hostnamectl set-hostname $myHOST
+sed -i 's#127.0.1.1.*#127.0.1.1\t'"$myHOST"'#g' /etc/hosts
 
 echo "### Adding extra repositories"
 sudo add-apt-repository ppa:system76/pop
