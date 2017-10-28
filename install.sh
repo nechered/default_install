@@ -34,11 +34,11 @@ sudo apt install -y curl scdaemon python-pip make gcc automake libtool sleuthkit
 echo "### Setting up random hostname"
 sudo cp *.txt /usr/share/dict/
 
-a=$(RANDOMWORD /usr/share/dict/a.txt)
-n=$(RANDOMWORD /usr/share/dict/n.txt)
+a=$(RANDOMWORD /usr/share/dict/hostname_a.txt)
+n=$(RANDOMWORD /usr/share/dict/hostname_n.txt)
 myHOST=$a$n
 hostnamectl set-hostname $myHOST
-sed -i 's#127.0.1.1.*#127.0.1.1\t'"$myHOST"'#g' /etc/hosts
+sudo sed -i 's#127.0.1.1.*#127.0.1.1\t'"$myHOST"'#g' /etc/hosts
 
 echo "### Adding extra repositories"
 sudo add-apt-repository ppa:system76/pop
